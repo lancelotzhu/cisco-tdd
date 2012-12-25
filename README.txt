@@ -39,12 +39,17 @@ Lab Preparation
 2. 结对编程
    http://en.wikipedia.org/wiki/Pair_programming
    http://zh.wikipedia.org/wiki/%E7%BB%93%E5%AF%B9%E7%BC%96%E7%A8%8B
-   
-3. 模拟对象库：EasyMock
+
+3. 还款方式
+   等额本金：http://baike.baidu.com/view/1274152.htm
+   等额本息：http://baike.baidu.com/view/178589.htm
+
+4. 模拟对象库：EasyMock
    http://www.easymock.org/EasyMock3_1_Documentation.html
    
-4. 验收测试驱动开发工具：WindowLicker
+5. 验收测试驱动开发工具：WindowLicker
    https://code.google.com/p/windowlicker/
    
-5. WebService库：Axis
+6. WebService库：Axis
    http://axis.apache.org/axis/overview.html
+
