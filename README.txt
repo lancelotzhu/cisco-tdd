@@ -8,6 +8,11 @@
 Web版购房贷款计算器
 http://soufun.com/house/newhouse/newhouse_tools.aspx
 
+实现要求：
+1. 开发全程需应用验收测试驱动开发和测试驱动开发
+2. 购房贷款计算器要求使用Swing实现
+3. 公积金和商业贷款的历史基准利率由WebService提供，部署在tomcat上
+
 
 Environment Setup
 --------------------------------------------------------------------------------
