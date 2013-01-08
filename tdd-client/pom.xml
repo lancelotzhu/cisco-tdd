@@ -31,4 +31,12 @@
 		</plugins>
 	</build>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.googlecode.windowlicker</groupId>
+			<artifactId>windowlicker-swing</artifactId>
+			<version>r268</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
