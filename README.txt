@@ -50,6 +50,6 @@ Lab Preparation
 5. 验收测试驱动开发工具：WindowLicker
    https://code.google.com/p/windowlicker/
    
-6. WebService库：Axis
-   http://axis.apache.org/axis/overview.html
+6. WebService库：Axis2
+   http://axis.apache.org/axis2/java/core/
 
