@@ -1,7 +1,5 @@
 package com.cisco.tdd.server;
 
-import java.util.List;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,8 +16,7 @@ public class LoanRateServiceTest {
 
 	@Test
 	public void testListAllLoanRates() {
-		List<LoanRate> loanRateList = target.listAll();
-		LoanRate[] loanRates = loanRateList.toArray(new LoanRate[0]);
+		LoanRate[] loanRates = target.listAll();
 		AssertUtils.assertLoanRate(loanRates);
 	}
 

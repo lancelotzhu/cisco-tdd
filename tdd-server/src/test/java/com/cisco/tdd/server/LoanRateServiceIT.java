@@ -1,7 +1,5 @@
 package com.cisco.tdd.server;
 
-import java.util.List;
-
 import javax.xml.namespace.QName;
 
 import org.apache.axis2.AxisFault;
@@ -27,15 +25,12 @@ public class LoanRateServiceIT {
 	}
 
 	@Test
-	@SuppressWarnings("unchecked")
 	public void testListAllLoanRates() throws AxisFault {
 		Object[] args = new Object[] {};
 		QName opName = new QName("http://localhost:8080/axis2", "listAll");
-		Object[] returnTypes = new Object[] { List.class };
-		List<LoanRate> loanRateList = (List<LoanRate>) target.invokeBlocking(
-				opName, args, returnTypes)[0];
-		LoanRate[] loanRates = loanRateList.toArray(new LoanRate[0]);
+		Class<?>[] returnTypes = new Class<?>[] { LoanRate[].class };
+		LoanRate[] loanRates = (LoanRate[]) target.invokeBlocking(opName, args, returnTypes)[0];
 		AssertUtils.assertLoanRate(loanRates);
 	}
-
+	
 }
