@@ -5,7 +5,12 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstallmentCalculator {
+/**
+ * 
+ * @author developer
+ *
+ */
+public class EqualPrincipalPayment implements RepaymentMethod {
 
 	public RepayPlan calculate(BigDecimal loanAmount, int term, BigDecimal loanRate) {
 		RepayPlan repayPlan = new RepayPlan();
@@ -21,13 +26,7 @@ public class InstallmentCalculator {
 			installment.setRepayAmount(repayAmount.setScale(2, RoundingMode.HALF_EVEN));
 			installments.add(installment);
 			unrepayPrincipal = unrepayPrincipal.subtract(repayPrincipal);		
-			System.out.println((i+1) + "/" +
-					repayAmount.setScale(2, RoundingMode.HALF_EVEN).toPlainString()+"/"+
-					repayInterest.setScale(2, RoundingMode.HALF_EVEN).toPlainString()+"/"+
-					repayPrincipal.setScale(2, RoundingMode.HALF_EVEN).toPlainString()+"/"+
-					unrepayPrincipal.setScale(2, RoundingMode.HALF_EVEN).toPlainString());
 		}
-		System.out.println("===================================================");
 		repayPlan.setInstallments(installments);		
 		return repayPlan;
 	}

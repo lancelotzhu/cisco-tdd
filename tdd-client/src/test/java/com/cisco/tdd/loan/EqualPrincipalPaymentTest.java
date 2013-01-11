@@ -6,13 +6,13 @@ import java.math.BigDecimal;
 
 import org.junit.Test;
 
-public class InterestCalculatorTest {
+public class EqualPrincipalPaymentTest {
 
-	private InstallmentCalculator target = null;
+	private RepaymentMethod target = null;
 
 	@Test
 	public void testEqualPrincipalWithSimpleLoanRate() {
-		target = new InstallmentCalculator();		
+		target = new EqualPrincipalPayment();		
 		RepayPlan repayplan = target.calculate(
 				new BigDecimal("300000"), 
 				12,
@@ -44,7 +44,7 @@ public class InterestCalculatorTest {
 
 	@Test
 	public void testEqualPrincipalWithHardLoanRate() {
-		target = new InstallmentCalculator();		
+		target = new EqualPrincipalPayment();		
 		RepayPlan repayplan = target.calculate(
 				new BigDecimal("300000"), 
 				12,
@@ -76,7 +76,7 @@ public class InterestCalculatorTest {
 	
 	@Test
 	public void testEqualPrincipalWithHardLoanAmount() {
-		target = new InstallmentCalculator();		
+		target = new EqualPrincipalPayment();		
 		RepayPlan repayplan = target.calculate(
 				new BigDecimal("500000"), 
 				12,
