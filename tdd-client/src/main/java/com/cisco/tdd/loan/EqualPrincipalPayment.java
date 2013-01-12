@@ -5,11 +5,6 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 
- * @author developer
- *
- */
 public class EqualPrincipalPayment implements RepaymentMethod {
 
 	public RepayPlan calculate(BigDecimal loanAmount, int term, BigDecimal loanRate) {

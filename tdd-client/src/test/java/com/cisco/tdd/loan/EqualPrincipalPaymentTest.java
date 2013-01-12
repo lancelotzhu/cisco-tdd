@@ -1,19 +1,24 @@
 package com.cisco.tdd.loan;
 
-import static org.junit.Assert.assertTrue;
+import static com.cisco.tdd.loan.AssertUtils.assertBigDecimal;
 
 import java.math.BigDecimal;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class EqualPrincipalPaymentTest {
 
 	private RepaymentMethod target = null;
 
+	@Before
+	public void setUp() {
+		target = new EqualPrincipalPayment();
+	}
+
 	@Test
-	public void testEqualPrincipalWithSimpleLoanRate() {
-		target = new EqualPrincipalPayment();		
-		RepayPlan repayplan = target.calculate(
+	public void testSimpleLoanRate() {
+		RepayPlan repayPlan = target.calculate(
 				new BigDecimal("300000"), 
 				12,
 				new BigDecimal("0.042"));
@@ -32,20 +37,14 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("25087.5") 
 		};
 		for (int i = 0; i < 12; i++) {
-			Installment installment = repayplan.getInstallments().get(i);
-			try {
-				assertTrue(expected[i].compareTo(installment.getRepayAmount()) == 0);
-			} catch (AssertionError e) {
-				throw new AssertionError("expected " + expected[i] + " but actually " + 
-						installment.getRepayAmount().toPlainString() + " at index " + i);
-			}
+			Installment installment = repayPlan.getInstallments().get(i);
+			assertBigDecimal(expected[i], installment.getRepayAmount());
 		}
 	}
 
 	@Test
-	public void testEqualPrincipalWithHardLoanRate() {
-		target = new EqualPrincipalPayment();		
-		RepayPlan repayplan = target.calculate(
+	public void testComplexLoanRate() {
+		RepayPlan repayPlan = target.calculate(
 				new BigDecimal("300000"), 
 				12,
 				new BigDecimal("0.04"));
@@ -64,20 +63,14 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("25083.33") 
 		};
 		for (int i = 0; i < 12; i++) {
-			Installment installment = repayplan.getInstallments().get(i);
-			try {
-				assertTrue(expected[i].compareTo(installment.getRepayAmount()) == 0);
-			} catch (AssertionError e) {
-				throw new AssertionError("expected " + expected[i] + " but actually " + 
-						installment.getRepayAmount() + " at index " + i);
-			}
+			Installment installment = repayPlan.getInstallments().get(i);
+			assertBigDecimal(expected[i], installment.getRepayAmount());
 		}
 	}
 	
 	@Test
-	public void testEqualPrincipalWithHardLoanAmount() {
-		target = new EqualPrincipalPayment();		
-		RepayPlan repayplan = target.calculate(
+	public void testComplexLoanAmount() {
+		RepayPlan repayPlan = target.calculate(
 				new BigDecimal("500000"), 
 				12,
 				new BigDecimal("0.04"));
@@ -96,13 +89,8 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("41805.56") 
 		};
 		for (int i = 0; i < 12; i++) {
-			Installment installment = repayplan.getInstallments().get(i);
-			try {
-				assertTrue(expected[i].compareTo(installment.getRepayAmount()) == 0);
-			} catch (AssertionError e) {
-				throw new AssertionError("expected " + expected[i] + " but actually " + 
-						installment.getRepayAmount() + " at index " + i);
-			}
+			Installment installment = repayPlan.getInstallments().get(i);
+			assertBigDecimal(expected[i], installment.getRepayAmount());
 		}
 	}
 }
