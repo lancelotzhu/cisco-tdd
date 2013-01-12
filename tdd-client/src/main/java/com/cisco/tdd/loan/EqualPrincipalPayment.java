@@ -14,11 +14,14 @@ public class EqualPrincipalPayment implements RepaymentMethod {
 		for (int i = 0; i < term; i++) {
 			Installment installment = new Installment();
 			BigDecimal repayPrincipal = loanAmount.divide(new BigDecimal(term), 
-					5, RoundingMode.HALF_EVEN);			
+					Constants.CNY_CALCULATE_PRECISION, RoundingMode.HALF_EVEN);			
 			BigDecimal repayInterest = unrepayPrincipal.multiply(loanRate).divide(
-					new BigDecimal("12"), 5, RoundingMode.HALF_EVEN);			
+					Constants.MONTHES_IN_ONE_YEAR, 
+					Constants.CNY_CALCULATE_PRECISION, 
+					RoundingMode.HALF_EVEN);			
 			BigDecimal repayAmount = repayPrincipal.add(repayInterest);
-			installment.setRepayAmount(repayAmount.setScale(2, RoundingMode.HALF_EVEN));
+			installment.setRepayAmount(repayAmount.setScale(
+					Constants.CNY_DISPLAY_PRECISION, RoundingMode.HALF_EVEN));
 			installments.add(installment);
 			unrepayPrincipal = unrepayPrincipal.subtract(repayPrincipal);		
 		}
