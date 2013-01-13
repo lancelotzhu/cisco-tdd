@@ -22,6 +22,7 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("300000"), 
 				12,
 				new BigDecimal("0.042"));
+		assertBigDecimal(new BigDecimal("306825"), repayPlan.getTotalRepayAmount());
 		BigDecimal[] expected = new BigDecimal[] { 
 				new BigDecimal("26050"),
 				new BigDecimal("25962.5"), 
@@ -48,6 +49,7 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("300000"), 
 				12,
 				new BigDecimal("0.04"));
+		assertBigDecimal(new BigDecimal("306500"), repayPlan.getTotalRepayAmount());
 		BigDecimal[] expected = new BigDecimal[] { 
 				new BigDecimal("26000"),
 				new BigDecimal("25916.67"), 
@@ -74,6 +76,7 @@ public class EqualPrincipalPaymentTest {
 				new BigDecimal("500000"), 
 				12,
 				new BigDecimal("0.04"));
+		assertBigDecimal(new BigDecimal("510833.33"), repayPlan.getTotalRepayAmount());
 		BigDecimal[] expected = new BigDecimal[] { 
 				new BigDecimal("43333.33"),
 				new BigDecimal("43194.44"), 

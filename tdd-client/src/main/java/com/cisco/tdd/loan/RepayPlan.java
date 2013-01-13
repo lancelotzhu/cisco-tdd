@@ -1,5 +1,6 @@
 package com.cisco.tdd.loan;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class RepayPlan {
@@ -13,5 +14,12 @@ public class RepayPlan {
 	public void setInstallments(List<Installment> installments) {
 		this.installments = installments;
 	}
-
+	
+	public BigDecimal getTotalRepayAmount() {
+		BigDecimal totalRepayAmount = BigDecimal.ZERO;
+		for (Installment installment : installments) {
+			totalRepayAmount = totalRepayAmount.add(installment.getRepayAmount());
+		}
+		return totalRepayAmount;
+	}
 }
