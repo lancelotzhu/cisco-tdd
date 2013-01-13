@@ -17,6 +17,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.cisco.tdd.loan.EqualPrincipalPayment;
+import com.cisco.tdd.loan.EqualTotalPayment;
 import com.cisco.tdd.loan.Installment;
 import com.cisco.tdd.loan.LoanTerm;
 import com.cisco.tdd.loan.RepayPlan;
@@ -41,10 +42,10 @@ public class LoanCalculator extends JFrame {
 		
 		JLabel lblRepaymentMethod = new JLabel("还款方式：");
 		add(lblRepaymentMethod, constraint(0, 1));
-		JRadioButton rbEqualPrincipal = new JRadioButton("等额本金");
+		final JRadioButton rbEqualPrincipal = new JRadioButton("等额本金");
 		rbEqualPrincipal.setName("equalPrincipal");
 		add(rbEqualPrincipal, constraint(1, 1));
-		JRadioButton rbEqualTotal = new JRadioButton("等额本息");
+		final JRadioButton rbEqualTotal = new JRadioButton("等额本息");
 		rbEqualTotal.setName("equalTotal");
 		add(rbEqualTotal, constraint(2, 1));
 		
@@ -85,19 +86,29 @@ public class LoanCalculator extends JFrame {
 		btnCalculate.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				RepaymentMethod repaymentMethod = new EqualPrincipalPayment();
+				RepaymentMethod repaymentMethod;
+				if (rbEqualTotal.isSelected()) {
+					repaymentMethod = new EqualTotalPayment();
+				} else {
+					repaymentMethod = new EqualPrincipalPayment();
+				}
 				RepayPlan repayPlan = repaymentMethod.calculate(
 						new BigDecimal(tfLoanAmount.getText()), 
 						Integer.valueOf(((LoanTerm)cbTerm.getSelectedItem()).getValue()), 
 						new BigDecimal("0.045"));
 				tfTotalRepayAmount.setText(repayPlan.getTotalRepayAmount().toPlainString());
 				StringBuffer sb = new StringBuffer();
-				for (int i = 0; i < repayPlan.getInstallments().size(); i++) {
-					Installment installment = repayPlan.getInstallments().get(i);
-					sb.append(i + 1);
-					sb.append("月,");
-					sb.append(installment.getRepayAmount());
+				if (1 == repayPlan.getInstallments().size()) {
+					sb.append(repayPlan.getInstallments().iterator().next().getRepayAmount());
 					sb.append("(元)\n");
+				} else {
+					for (int i = 0; i < repayPlan.getInstallments().size(); i++) {
+						Installment installment = repayPlan.getInstallments().get(i);
+						sb.append(i + 1);
+						sb.append("月,");
+						sb.append(installment.getRepayAmount());
+						sb.append("(元)\n");
+					}
 				}
 				taRepayPlan.setText(sb.toString());
 				pack();

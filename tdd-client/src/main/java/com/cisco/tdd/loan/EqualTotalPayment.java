@@ -24,6 +24,7 @@ public class EqualTotalPayment implements RepaymentMethod {
 		installment.setRepayAmount(repayAmount);
 		installments.add(installment);
 		repayPlan.setInstallments(installments);
+		repayPlan.setTotalRepayAmount(repayAmount.multiply(new BigDecimal(term)));
 		return repayPlan;
 	}
 

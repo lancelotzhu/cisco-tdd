@@ -11,6 +11,7 @@ public class EqualPrincipalPayment implements RepaymentMethod {
 		RepayPlan repayPlan = new RepayPlan();
 		List<Installment> installments = new ArrayList<Installment>();
 		BigDecimal unrepayPrincipal = new BigDecimal(loanAmount.toString());
+		BigDecimal totalRepayAmount = BigDecimal.ZERO;
 		for (int i = 0; i < term; i++) {
 			Installment installment = new Installment();
 			BigDecimal repayPrincipal = loanAmount.divide(new BigDecimal(term), 
@@ -19,12 +20,14 @@ public class EqualPrincipalPayment implements RepaymentMethod {
 					Constants.MONTHES_IN_ONE_YEAR, 
 					Constants.CNY_CALCULATE_PRECISION, 
 					RoundingMode.HALF_EVEN);			
-			BigDecimal repayAmount = repayPrincipal.add(repayInterest);
-			installment.setRepayAmount(repayAmount.setScale(
-					Constants.CNY_DISPLAY_PRECISION, RoundingMode.HALF_EVEN));
+			BigDecimal repayAmount = repayPrincipal.add(repayInterest).setScale(
+					Constants.CNY_DISPLAY_PRECISION, RoundingMode.HALF_EVEN);
+			installment.setRepayAmount(repayAmount);
 			installments.add(installment);
-			unrepayPrincipal = unrepayPrincipal.subtract(repayPrincipal);		
+			unrepayPrincipal = unrepayPrincipal.subtract(repayPrincipal);	
+			totalRepayAmount = totalRepayAmount.add(repayAmount);
 		}
+		repayPlan.setTotalRepayAmount(totalRepayAmount);
 		repayPlan.setInstallments(installments);		
 		return repayPlan;
 	}
