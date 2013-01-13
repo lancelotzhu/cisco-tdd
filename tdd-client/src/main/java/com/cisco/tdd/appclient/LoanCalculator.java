@@ -6,6 +6,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -16,6 +17,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.cisco.tdd.common.LoanRate;
+import com.cisco.tdd.common.LoanRateFinder;
+import com.cisco.tdd.loan.DefaultLoanRateFinder;
 import com.cisco.tdd.loan.EqualPrincipalPayment;
 import com.cisco.tdd.loan.EqualTotalPayment;
 import com.cisco.tdd.loan.Installment;
@@ -27,10 +31,9 @@ public class LoanCalculator extends JFrame {
 
 	private static final long serialVersionUID = 8860015484218274806L;
 	
-	private static final Insets defaultInsets = new Insets(2,2,2,2);
-
+	private static final Insets DEFAULT_INSETS = new Insets(2,2,2,2);
 	
-	public LoanCalculator() {
+	public LoanCalculator(LoanRateFinder loanRateFinder) {
 		super("Loan Calculator");
 		setLayout(new GridBagLayout());
 		
@@ -60,28 +63,38 @@ public class LoanCalculator extends JFrame {
 		cbTerm.addItem(new LoanTerm(360));
 		add(cbTerm, constraint(1, 2));
 		
+		JLabel lblRate = new JLabel("利率：");
+		add(lblRate, constraint(0, 3));
+		final JComboBox cbRate = new JComboBox();
+		cbRate.setName("rate");
+		List<LoanRate> loanRates = loanRateFinder.listAll();
+		for (LoanRate loanRate : loanRates) {
+			cbRate.addItem(loanRate);
+		}
+		add(cbRate, constraint(1, 3));
+
 		JButton btnCalculate = new JButton("开始计算");
 		btnCalculate.setName("calculate");
-		add(btnCalculate, constraint(1, 3));
+		add(btnCalculate, constraint(1, 4));
 		
 		JLabel lblTotalRepayAmount = new JLabel("还款总额：");
-		add(lblTotalRepayAmount, constraint(0, 4));
+		add(lblTotalRepayAmount, constraint(0, 5));
 		final JTextField tfTotalRepayAmount = new JTextField(12);
 		tfTotalRepayAmount.setEditable(false);
 		tfTotalRepayAmount.setName("totalRepayAmount");
-		add(tfTotalRepayAmount, constraint(1, 4));
+		add(tfTotalRepayAmount, constraint(1, 5));
 		JLabel lblCurrency = new JLabel("元");
-		add(lblCurrency, constraint(2, 4));
+		add(lblCurrency, constraint(2, 5));
 
 		JLabel lblRepayPlan = new JLabel("月均金额：");
-		add(lblRepayPlan, constraint(0, 5));
+		add(lblRepayPlan, constraint(0, 6));
 		final JTextArea taRepayPlan = new JTextArea();
 		taRepayPlan.setEditable(false);		
 		taRepayPlan.setName("repayPlan");
 		taRepayPlan.setRows(5);
 		taRepayPlan.setWrapStyleWord(true);
 		JScrollPane spRepayPlan = new JScrollPane(taRepayPlan); 
-		add(spRepayPlan, constraint(1, 5));
+		add(spRepayPlan, constraint(1, 6));
 
 		btnCalculate.addActionListener(new ActionListener() {
 			@Override
@@ -95,7 +108,7 @@ public class LoanCalculator extends JFrame {
 				RepayPlan repayPlan = repaymentMethod.calculate(
 						new BigDecimal(tfLoanAmount.getText()), 
 						Integer.valueOf(((LoanTerm)cbTerm.getSelectedItem()).getValue()), 
-						new BigDecimal("0.045"));
+						((LoanRate)cbRate.getSelectedItem()).getLongTermProvidentLoanRate());
 				tfTotalRepayAmount.setText(repayPlan.getTotalRepayAmount().toPlainString());
 				StringBuffer sb = new StringBuffer();
 				if (1 == repayPlan.getInstallments().size()) {
@@ -125,13 +138,13 @@ public class LoanCalculator extends JFrame {
             gridy = y;
             weightx = 1;
             weighty = 1;
-            insets = defaultInsets;
+            insets = DEFAULT_INSETS;
             fill = BOTH;
         }};
 	}
 	
 	public static void main(String... args) {
-		LoanCalculator loanCalculator = new LoanCalculator();
+		LoanCalculator loanCalculator = new LoanCalculator(new DefaultLoanRateFinder());
 		loanCalculator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		loanCalculator.setName("Loan Calculator");
 		loanCalculator.setVisible(true);

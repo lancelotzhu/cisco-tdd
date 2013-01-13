@@ -9,6 +9,6 @@
 			class="org.apache.axis2.rpc.receivers.RPCMessageReceiver" />
 	</messageReceivers>
 	<parameter name="ServiceClass">
-		com.cisco.tdd.server.LoanRateService
+		com.cisco.tdd.server.LoanRateServiceImpl
 	</parameter>
 </service>

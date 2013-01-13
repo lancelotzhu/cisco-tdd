@@ -9,7 +9,7 @@ public class LoanRate implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 6086521407484447764L;
-
+	
 	private String description;
 
 	private BigDecimal shortTermCommercialLoanRate;
@@ -62,5 +62,10 @@ public class LoanRate implements Serializable {
 	public void setLongTermProvidentLoanRate(
 			BigDecimal longTermProvidentLoanRate) {
 		this.longTermProvidentLoanRate = longTermProvidentLoanRate;
+	}
+
+	@Override
+	public String toString() {
+		return description;
 	}
 }

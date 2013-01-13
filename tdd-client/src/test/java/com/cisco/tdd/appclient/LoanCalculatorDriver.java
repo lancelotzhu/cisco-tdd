@@ -2,6 +2,7 @@ package com.cisco.tdd.appclient;
 
 import static org.hamcrest.Matchers.equalTo;
 
+import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,9 +10,14 @@ import java.io.InputStreamReader;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.hamcrest.BaseMatcher;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
 
 import com.objogate.wl.swing.AWTEventQueueProber;
 import com.objogate.wl.swing.driver.JButtonDriver;
@@ -52,6 +58,10 @@ public class LoanCalculatorDriver extends JFrameDriver {
 			index = 21;
 		}
 		comboBox("term").selectItem(index);
+	}
+
+	public void selectRate(String rate) {
+		comboBox("rate").selectItem(withLabel(rate));
 	}
 
 	public void clickCalculateButton() {
@@ -110,5 +120,18 @@ public class LoanCalculatorDriver extends JFrameDriver {
 	private JButtonDriver button(String name) {
         return new JButtonDriver(this, JButton.class, named(name));
     }
-	
+    
+    private Matcher<? extends Component> withLabel(final String text) {
+    	return new BaseMatcher<JLabel>() {
+			@Override
+			public boolean matches(Object obj) {
+				return text.equals(((JLabel)obj).getText());
+			}
+			@Override
+			public void describeTo(Description description) {
+			}
+			
+		};
+    }
+
 }
