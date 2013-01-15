@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -44,13 +45,16 @@ public class LoanCalculator extends JFrame {
 		add(tfLoanAmount, constraint(1, 0));
 		
 		JLabel lblRepaymentMethod = new JLabel("还款方式：");
+		ButtonGroup bgRepaymentMethod = new ButtonGroup();
 		add(lblRepaymentMethod, constraint(0, 1));
 		final JRadioButton rbEqualPrincipal = new JRadioButton("等额本金");
 		rbEqualPrincipal.setName("equalPrincipal");
 		add(rbEqualPrincipal, constraint(1, 1));
+		bgRepaymentMethod.add(rbEqualPrincipal);
 		final JRadioButton rbEqualTotal = new JRadioButton("等额本息");
 		rbEqualTotal.setName("equalTotal");
 		add(rbEqualTotal, constraint(2, 1));
+		bgRepaymentMethod.add(rbEqualTotal);
 		
 		JLabel lblTerm = new JLabel("按揭年数：");
 		add(lblTerm, constraint(0, 2));
