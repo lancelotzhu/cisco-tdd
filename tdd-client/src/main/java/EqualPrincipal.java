@@ -6,7 +6,7 @@ public class EqualPrincipal {
 	private BigDecimal totalAmountOfLoan = null;
 	private int termInMonth = 0;
 	private BigDecimal rate = null;
-	private BigDecimal paidPrincipal = new BigDecimal(0);
+	private BigDecimal paidPrincipal = BigDecimal.ZERO;
 
 	public EqualPrincipal(BigDecimal totalAmountOfLoan, int termInMonth,
 			BigDecimal rate) {
