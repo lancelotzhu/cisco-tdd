@@ -10,8 +10,7 @@ public class EqualPrincipalTest {
 	public void should_pay_back_proper_amount_money_when_borrow_120k_with_rate_4_86_in_10_years() {
 		// setup
 		int termInMonth = 10 * 12;
-		BigDecimal totalAmountOfLoan = new BigDecimal(100000);
-//		BigDecimal totalAmountOfLoan = new BigDecimal(120000);
+		BigDecimal totalAmountOfLoan = new BigDecimal(120000);
 		BigDecimal yearRate = new BigDecimal("0.0486");
 		EqualPrincipal actualEqualPrincipal = new EqualPrincipal(
 				totalAmountOfLoan, termInMonth, yearRate);
